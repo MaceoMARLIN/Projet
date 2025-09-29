@@ -10,27 +10,114 @@
   </head>
   <body>
     <a-scene physics="debug: true">
-        <a-sphere position="0 2 -5" radius="1" color="#EF2D5E" dynamic-body></a-sphere>
         <a-plane position="0 0 -5" rotation="-90 0 0" width="10" height="10" color="#7BC8A4" static-body></a-plane>
         <a-sky color="#ECECEC"></a-sky>
 
+        <!-- Player -->
         <a-entity id="rig" position="0 0 0" movement-controls="speed: 0.1">
+            <!-- Camera -->
             <a-entity camera look-controls position="0 1.6 0"></a-entity>
+            <!-- Left controller -->
             <a-entity 
                 id="leftHand"
                 static-body="shape: sphere; sphereRadius: 0.03"
                 oculus-touch-controls="hand: left; model: true"
             ></a-entity>
+            <!-- Right controller -->
             <a-entity 
                 id="rightHand"
                 static-body="shape: sphere; sphereRadius: 0.03"
                 oculus-touch-controls="hand: right; model: true"
-            ></a-entity>
+                sphere-collider="objects: .grabbable"
+                grabbygrip>
+                <!-- Fake ball -->
+                <a-sphere id="fakeBall" radius="0.1" color="red" position="0 0 -0.1" visible="false"></a-sphere>
+            </a-entity>
+
+            <a-sphere 
+                id="ball" 
+                class="grabbable" 
+                radius="0.1" 
+                color="red" 
+                position="0 1.6 -0.5" 
+                dynamic-body="shape: sphere; sphereRadius: 0.1; mass: 1">
         </a-entity>
 
     </a-scene>
     <script>
-        AFRAME.registerComponent
+        var isBallGrabbed = false;
+
+        AFRAME.registerComponent('grabbygrip', {
+            init: function (){
+                this.system = this.el.sceneEl.systems.physics;
+                this.GRABBED_STATE = 'grabbed';
+
+                this.grabbing = false;
+                this.hitEl = null;
+                this.physics = this.el.sceneEl.systems.physics;
+                this.constraint = null; 
+
+                this.onHit = this.onHit.bind(this);
+                this.onGripOpen = this.onGripOpen.bind(this);
+                this.onGripClose = this.onGripClose.bind(this);
+            },
+
+            play: function() {
+                const el = this.el;
+                el.addEventListener('hit', this.onHit);
+                el.addEventListener('gripdown', this.onGripClose);
+                el.addEventListener('gripup', this.onGripOpen);
+            },
+
+            pause: function() {
+                const el = this.el;
+                el.removeEventListener('hit', this.onHit);
+                el.removeEventListener('gripdown', this.onGripClose);
+                el.removeEventListener('gripup', this.onGripOpen);
+            },
+
+            onGripClose: function() {
+                this.grabbing = true;
+            },
+
+            onGripOpen: function() {
+                const hitEl = this.hitEl;
+                this.grabbing = false;
+                if (!hitEl) { return; }
+                hitEl.removeState(this.GRABBED_STATE);
+                this.hitEl = undefined;
+                this.system.removeConstraint(this.constraint);
+                this.constraint = null;
+
+                if (this.el.id === "rightHand") {
+                    const ball = document.getElementById("ball");
+                    const fakeBall = document.getElementById("fakeBall");
+                    ball.setAttribute("visible", "true");
+                    fakeBall.setAttribute("visible", "false");
+                    isBallGrabbed = false;
+                }
+            },
+
+            onHit: function (e) {
+                const hitEl = e.detail.body.el;
+                if (!this.grabbing || hitEl === this.el || hitEl.is(this.GRABBED_STATE)) { return; }
+                this.hitEl = hitEl;
+                hitEl.addState(this.GRABBED_STATE);
+
+                this.constraint = new CANNON.LockConstraint(this.el.body, hitEl.body);
+                this.system.addConstraint(this.constraint);
+
+                if (this.el.id === "rightHand") {
+                    if (hitEl.id === 'ball'){
+                        const ball = document.getElementById("ball");
+                        const fakeBall = document.getElementById("fakeBall");
+                        ball.setAttribute("visible", "false");
+                        fakeBall.setAttribute("visible", "true");
+                        isBallGrabbed = true;
+                    }
+                }
+            }
+        });
     </script>
   </body>
 </html>

@@ -5,14 +5,40 @@
     <title>Grab simplifié</title>
     <meta name="description" content="Test grab sans fakeBall" />
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/takahirox/aframe-outline@master/build/aframe-outline.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.5.1/dist/aframe-extras.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@master/dist/aframe-physics-system.min.js"></script>
   </head>
   <body>
     <a-scene physics="gravity: -9.8">
+
+      <a-assets>
+        <a-asset-item id="pin_model" src="bowling_pin.glb"></a-asset-item>
+      </a-assets>
       <!-- Sol -->
-      <a-plane position="0 0 -5" rotation="-90 0 0" width="10" height="10" color="#7BC8A4" static-body></a-plane>
+      <a-box 
+        position="0 -0.025 -9"
+        width="1.5"
+        height="0.05"
+        depth="18.5"
+        color="#7BC8A4" 
+        static-body>
+      </a-box>
+
+      <!-- Ciel -->
       <a-sky color="#ECECEC"></a-sky>
+
+      <!-- Quilles -->
+      <a-entity gltf-model="#pin_model" position="0 0.5 -17" dynamic-body="mass: 1"></a-entity>
+      <a-entity gltf-model="#pin_model" position="0.2 0.5 -17.2" dynamic-body="mass: 1"></a-entity>
+      <a-entity gltf-model="#pin_model" position="-0.2 0.5 -17.2" dynamic-body="mass: 1"></a-entity>
+      <a-entity gltf-model="#pin_model" position="0.4 0.5 -17.4" dynamic-body="mass: 1"></a-entity>
+      <a-entity gltf-model="#pin_model" position="-0.4 0.5 -17.4" dynamic-body="mass: 1"></a-entity>
+      <a-entity gltf-model="#pin_model" position="0 0.5 -17.4" dynamic-body="mass: 1"></a-entity>
+      <a-entity gltf-model="#pin_model" position="0.6 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
+      <a-entity gltf-model="#pin_model" position="-0.6 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
+      <a-entity gltf-model="#pin_model" position="0.2 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
+      <a-entity gltf-model="#pin_model" position="-0.2 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
 
       <!-- Joueur -->
       <a-entity id="rig" position="0 0 0" movement-controls="speed: 0.1">
@@ -39,11 +65,11 @@
         <a-sphere 
           id="ball" 
           class="grabbable" 
-          radius="0.1" 
+          radius="0.11" 
           color="red" 
           position="0 1.6 -0.5" 
           dynamic-body="shape: sphere; sphereRadius: 0.1; mass: 1">
-        </a-sphere>
+      </a-sphere>
       </a-entity>
     </a-scene>
 

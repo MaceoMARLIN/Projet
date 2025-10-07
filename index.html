@@ -5,7 +5,6 @@
     <title>Grab simplifié</title>
     <meta name="description" content="Test grab sans fakeBall" />
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/takahirox/aframe-outline@master/build/aframe-outline.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.5.1/dist/aframe-extras.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@master/dist/aframe-physics-system.min.js"></script>
   </head>
@@ -14,6 +13,7 @@
 
       <a-assets>
         <a-asset-item id="pin_model" src="bowling_pin.glb"></a-asset-item>
+        <a-asset-item id="gutter_model" src="gut.glb"></a-asset-item>
       </a-assets>
       <!-- Sol -->
       <a-box 
@@ -28,17 +28,24 @@
       <!-- Ciel -->
       <a-sky color="#ECECEC"></a-sky>
 
-      <!-- Quilles -->
-      <a-entity gltf-model="#pin_model" position="0 0.5 -17" dynamic-body="mass: 1"></a-entity>
-      <a-entity gltf-model="#pin_model" position="0.2 0.5 -17.2" dynamic-body="mass: 1"></a-entity>
-      <a-entity gltf-model="#pin_model" position="-0.2 0.5 -17.2" dynamic-body="mass: 1"></a-entity>
-      <a-entity gltf-model="#pin_model" position="0.4 0.5 -17.4" dynamic-body="mass: 1"></a-entity>
-      <a-entity gltf-model="#pin_model" position="-0.4 0.5 -17.4" dynamic-body="mass: 1"></a-entity>
-      <a-entity gltf-model="#pin_model" position="0 0.5 -17.4" dynamic-body="mass: 1"></a-entity>
-      <a-entity gltf-model="#pin_model" position="0.6 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
-      <a-entity gltf-model="#pin_model" position="-0.6 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
-      <a-entity gltf-model="#pin_model" position="0.2 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
-      <a-entity gltf-model="#pin_model" position="-0.2 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
+      <a-assets id="level1map">
+        <!-- Quilles -->
+        <a-entity gltf-model="#pin_model" position="0 0.5 -17" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.2 0.5 -17.2" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -17.2" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.4 0.5 -17.4" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.4 0.5 -17.4" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0 0.5 -17.4" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.6 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.6 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.2 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
+
+        <!-- Gouttières -->
+        <a-entity gltf-model="#gutter_model" position="1 -0.3 -7.9" scale="0.6 0.6 1.8" static-body></a-entity>
+        <a-entity gltf-model="#gutter_model" position="-1 -0.3 -7.9" scale="0.6 0.6 1.8" static-body></a-entity>
+      </a-assets>
+
 
       <!-- Joueur -->
       <a-entity id="rig" position="0 0 0" movement-controls="speed: 0.1">
@@ -71,6 +78,7 @@
           dynamic-body="shape: sphere; sphereRadius: 0.1; mass: 1">
       </a-sphere>
       </a-entity>
+
     </a-scene>
 
     <script>
@@ -132,6 +140,31 @@
           this.system.addConstraint(this.constraint);
         }
       });
+      AFRAME.registerComponent('menu-controls', {
+        init: function () {
+          const el = this.el;
+
+          el.querySelector('#level1').addEventListener('click', () => {
+            console.log('Level 1 selected');
+            loadLevel(1);
+          });
+
+          el.querySelector('#level2').addEventListener('click', () => {
+            console.log('Level 2 selected');
+            loadLevel(2);
+          });
+        }
+      });
+
+  function loadLevel(level) {
+    // Exemple simple : changer la couleur du sol ou charger une autre scène
+    const scene = document.querySelector('a-scene');
+    if (level === 1) {
+      scene.querySelector('a-plane').setAttribute('color', '#7BC8A4');
+    } else {
+      scene.querySelector('a-plane').setAttribute('color', '#FF7043');
+    }
+  }
     </script>
   </body>
 </html>

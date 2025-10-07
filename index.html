@@ -15,30 +15,21 @@
         <a-asset-item id="pin_model" src="bowling_pin.glb"></a-asset-item>
         <a-asset-item id="gutter_model" src="gut.glb"></a-asset-item>
       </a-assets>
-      <!-- Sol -->
-      <a-box 
-        position="0 -0.025 -9"
-        width="1.5"
-        height="0.05"
-        depth="18.5"
-        color="#7BC8A4" 
-        static-body>
-      </a-box>
 
       <!-- Ciel -->
       <a-sky color="#ECECEC"></a-sky>
 
-      <a-assets id="level3map">
+      <a-entity id="level3map" visible="false">
         <!-- Sol -->
-      <a-box 
-        position="0 -0.025 -9"
-        width="1.5"
-        height="0.05"
-        depth="18.5"
-        color="#7BC8A4" 
-        static-body>
-      </a-box>
-      
+        <a-box 
+          position="0 -0.025 -9"
+          width="1.5"
+          height="0.05"
+          depth="18.5"
+          color="#7BC8A4" 
+          static-body>
+        </a-box>
+
         <!-- Quilles -->
         <a-entity gltf-model="#pin_model" position="0 0.5 -17" dynamic-body="mass: 1"></a-entity>
         <a-entity gltf-model="#pin_model" position="0.2 0.5 -17.2" dynamic-body="mass: 1"></a-entity>
@@ -54,7 +45,79 @@
         <!-- Gouttières -->
         <a-entity gltf-model="#gutter_model" position="1 -0.3 -7.9" scale="0.6 0.6 1.8" static-body></a-entity>
         <a-entity gltf-model="#gutter_model" position="-1 -0.3 -7.9" scale="0.6 0.6 1.8" static-body></a-entity>
-      </a-assets>
+      </a-entity>
+
+      <a-entity id="level2map" visible="false">
+        <!-- Sol -->
+        <a-box 
+          position="0 -0.025 -6.9"
+          width="1.5"
+          height="0.05"
+          depth="14"
+          color="#7BC8A4" 
+          static-body>
+        </a-box>
+
+        <!-- Quilles -->
+        <a-entity gltf-model="#pin_model" position="0 0.5 -13" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.2 0.5 -13.2" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -13.2" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.4 0.5 -13.4" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.4 0.5 -13.4" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0 0.5 -13.4" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.6 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.6 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.2 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
+
+        <!-- Gouttières -->
+        <a-entity gltf-model="#gutter_model" position="0.875 -0.144 -6.170" scale="0.3 0.3 1.4" static-body></a-entity>
+        <a-entity gltf-model="#gutter_model" position="-0.875 -0.144 -6.170" scale="0.3 0.3 1.4" static-body></a-entity>
+      </a-entity>
+
+      <a-entity id="level1map" visible="true">
+        <!-- Sol -->
+        <a-box 
+          position="0 -0.025 -6.9"
+          width="1.5"
+          height="0.05"
+          depth="14"
+          color="#7BC8A4" 
+          static-body>
+        </a-box>
+
+        <!-- Quilles -->
+        <a-entity gltf-model="#pin_model" position="0 0.5 -13" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.2 0.5 -13.2" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -13.2" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.4 0.5 -13.4" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.4 0.5 -13.4" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0 0.5 -13.4" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.6 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.6 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.2 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
+
+        <!-- Gouttières -->
+        <a-box 
+          position="0.804 0.115 -6.906"
+          width="0.1"
+          height="0.3"
+          depth="14"
+          color="#654321" 
+          static-body>
+        </a-box>
+        <a-box 
+          position="-0.804 0.115 -6.906"
+          width="0.1"
+          height="0.3"
+          depth="14"
+          color="#654321" 
+          static-body>
+        </a-box>
+      </a-entity>
+
+
 
 
       <!-- Joueur -->
@@ -150,31 +213,6 @@
           this.system.addConstraint(this.constraint);
         }
       });
-      AFRAME.registerComponent('menu-controls', {
-        init: function () {
-          const el = this.el;
-
-          el.querySelector('#level1').addEventListener('click', () => {
-            console.log('Level 1 selected');
-            loadLevel(1);
-          });
-
-          el.querySelector('#level2').addEventListener('click', () => {
-            console.log('Level 2 selected');
-            loadLevel(2);
-          });
-        }
-      });
-
-  function loadLevel(level) {
-    // Exemple simple : changer la couleur du sol ou charger une autre scène
-    const scene = document.querySelector('a-scene');
-    if (level === 1) {
-      scene.querySelector('a-plane').setAttribute('color', '#7BC8A4');
-    } else {
-      scene.querySelector('a-plane').setAttribute('color', '#FF7043');
-    }
-  }
     </script>
   </body>
 </html>

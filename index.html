@@ -9,38 +9,69 @@
     <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@master/dist/aframe-physics-system.min.js"></script>
   </head>
   <body>
-    <a-scene physics="gravity: -9.8">
+    <a-scene physics="gravity: -9.8" single-frame-bowling>
 
       <a-assets>
         <a-asset-item id="pin_model" src="bowling_pin.glb"></a-asset-item>
         <a-asset-item id="gutter_model" src="gut.glb"></a-asset-item>
+        <img id="parquet" src="parquet.jpg">
       </a-assets>
 
       <!-- Ciel -->
       <a-sky color="#ECECEC"></a-sky>
 
+      <!-- Lumière -->
+      <a-light type="ambient" intensity="0.5"></a-light>
+      <a-light type="directional" intensity="0.8" position="-1 2 1"></a-light>
+
+      <!-- Sol -->
+      <a-plane rotation="-90 0 0" width="10" height="10"  position="0 0 4" static-body material="src: #parquet; repeat: 10 0"></a-plane>
+
+      <a-box 
+        position="-3 0.5 0"
+        color="green"
+        static-body>
+      </a-box>
+      <a-box 
+        position="2 0.5 2"
+        color="blue"
+        rotation="0 -45 0"
+        static-body>
+      </a-box>
+      <a-box 
+        position="-2 0.5 2"
+        rotation="0 45 0"
+        color="red"
+        static-body>
+      </a-box>
+      <a-box 
+        position="0 0.5 3"
+        color="black"
+        static-body>
+      </a-box>
+
       <a-entity id="level3map" visible="true">
-        <!-- Sol -->
+        <!-- Piste -->
         <a-box 
           position="0 -0.025 -9"
           width="1.5"
           height="0.05"
           depth="18.5"
-          color="#7BC8A4" 
-          static-body>
+          material="src: #parquet"
+          static-body="friction: 0.5; angularDamping: 0.3; linearDamping: 0.2">
         </a-box>
 
         <!-- Quilles -->
-        <a-entity gltf-model="#pin_model" position="0 0.5 -17" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0.2 0.5 -17.2" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -17.2" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0.4 0.5 -17.4" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="-0.4 0.5 -17.4" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0 0.5 -17.4" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0.6 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="-0.6 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0.2 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -17.6" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0 0.5 -17" dynamic-body="mass: 1" class="pin" data-start-pos="0 0.5 -17"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.2 0.5 -17.2" dynamic-body="mass: 1" class="pin" data-start-pos="0.2 0.5 -17.2"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -17.2" dynamic-body="mass: 1" class="pin" data-start-pos="-0.2 0.5 -17.2"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.4 0.5 -17.4" dynamic-body="mass: 1" class="pin" data-start-pos="0.4 0.5 -17.4"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.4 0.5 -17.4" dynamic-body="mass: 1" class="pin" data-start-pos="-0.4 0.5 -17.4"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0 0.5 -17.4" dynamic-body="mass: 1" class="pin" data-start-pos="0 0.5 -17.4"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.6 0.5 -17.6" dynamic-body="mass: 1" class="pin" data-start-pos="0.6 0.5 -17.6"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.6 0.5 -17.6" dynamic-body="mass: 1" class="pin" data-start-pos="-0.6 0.5 -17.6"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.2 0.5 -17.6" dynamic-body="mass: 1" class="pin" data-start-pos="0.2 0.5 -17.6"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -17.6" dynamic-body="mass: 1" class="pin" data-start-pos="-0.2 0.5 -17.6"></a-entity>
 
         <!-- Gouttières -->
         <a-entity gltf-model="#gutter_model" position="1 -0.3 -7.9" scale="0.6 0.6 1.8" static-body></a-entity>
@@ -48,27 +79,28 @@
       </a-entity>
 
       <a-entity id="level2map" visible="false">
-        <!-- Sol -->
+        <!-- Piste -->
         <a-box 
           position="0 -0.025 -6.9"
           width="1.5"
           height="0.05"
           depth="14"
-          color="#7BC8A4" 
-          static-body>
+          color="#7BC8A4"
+          material="src: #parquet"
+          static-body="friction: 0.7; angularDamping: 0.5; linearDamping: 0.4">
         </a-box>
 
         <!-- Quilles -->
-        <a-entity gltf-model="#pin_model" position="0 0.5 -13" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0.2 0.5 -13.2" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -13.2" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0.4 0.5 -13.4" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="-0.4 0.5 -13.4" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0 0.5 -13.4" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0.6 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="-0.6 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0.2 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0 0.5 -13" dynamic-body="mass: 1" class="pin" data-start-pos="0 0.5 -13"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.2 0.5 -13.2" dynamic-body="mass: 1" class="pin" data-start-pos="0.2 0.5 -13.2"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -13.2" dynamic-body="mass: 1" class="pin" data-start-pos="-0.2 0.5 -13.2"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.4 0.5 -13.4" dynamic-body="mass: 1" class="pin" data-start-pos="0.4 0.5 -13.4"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.4 0.5 -13.4" dynamic-body="mass: 1" class="pin" data-start-pos="-0.4 0.5 -13.4"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0 0.5 -13.4" dynamic-body="mass: 1" class="pin" data-start-pos="0 0.5 -13.4"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.6 0.5 -13.6" dynamic-body="mass: 1" class="pin" data-start-pos="0.6 0.5 -13.6"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.6 0.5 -13.6" dynamic-body="mass: 1" class="pin" data-start-pos="-0.6 0.5 -13.6"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.2 0.5 -13.6" dynamic-body="mass: 1"class="pin" data-start-pos="0.2 0.5 -13.6"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -13.6" dynamic-body="mass: 1"class="pin" data-start-pos="-0.2 0.5 -13.6"></a-entity>
 
         <!-- Gouttières -->
         <a-entity gltf-model="#gutter_model" position="0.875 -0.144 -6.170" scale="0.3 0.3 1.4" static-body></a-entity>
@@ -76,27 +108,28 @@
       </a-entity>
 
       <a-entity id="level1map" visible="false">
-        <!-- Sol -->
+        <!-- Piste -->
         <a-box 
           position="0 -0.025 -6.9"
           width="1.5"
           height="0.05"
           depth="14"
-          color="#7BC8A4" 
-          static-body>
+          color="#7BC8A4"
+          material="src: #parquet"
+          static-body="friction: 1.0; angularDamping: 0.8; linearDamping: 0.6">
         </a-box>
 
         <!-- Quilles -->
-        <a-entity gltf-model="#pin_model" position="0 0.5 -13" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0.2 0.5 -13.2" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -13.2" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0.4 0.5 -13.4" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="-0.4 0.5 -13.4" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0 0.5 -13.4" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0.6 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="-0.6 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="0.2 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
-        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -13.6" dynamic-body="mass: 1"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0 0.5 -13" dynamic-body="mass: 1" class="pin" data-start-pos="0 0.5 -13"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.2 0.5 -13.2" dynamic-body="mass: 1" class="pin" data-start-pos="0.2 0.5 -13.2"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -13.2" dynamic-body="mass: 1" class="pin" data-start-pos="-0.2 0.5 -13.2"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.4 0.5 -13.4" dynamic-body="mass: 1" class="pin" data-start-pos="0.4 0.5 -13.4"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.4 0.5 -13.4" dynamic-body="mass: 1" class="pin" data-start-pos="-0.4 0.5 -13.4"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0 0.5 -13.4" dynamic-body="mass: 1" class="pin" data-start-pos="0 0.5 -13.4"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.6 0.5 -13.6" dynamic-body="mass: 1" class="pin" data-start-pos="0.6 0.5 -13.6"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.6 0.5 -13.6" dynamic-body="mass: 1" class="pin" data-start-pos="-0.6 0.5 -13.6"></a-entity>
+        <a-entity gltf-model="#pin_model" position="0.2 0.5 -13.6" dynamic-body="mass: 1" class="pin" data-start-pos="0.2 0.5 -13.6"></a-entity>
+        <a-entity gltf-model="#pin_model" position="-0.2 0.5 -13.6" dynamic-body="mass: 1" class="pin" data-start-pos="-0.2 0.5 -13.6"></a-entity>
 
         <!-- Gouttières -->
         <a-box 
@@ -138,34 +171,187 @@
           static-body="shape: sphere; sphereRadius: 0.03"
           oculus-touch-controls="hand: right; model: true"
           sphere-collider="objects: .grabbable"
+          laser-controls="hand: right"
+          raycaster="objects: .menu-button;"
           grabbygrip>
         </a-entity>
+      </a-entity>
+        <!-- Objets à attraper -->
 
-        <!-- Objet à attraper -->
-        <a-sphere 
-          id="ball" 
-          class="grabbable" 
-          radius="0.11" 
-          color="red" 
-          position="0 1.6 -0.5" 
-          dynamic-body="shape: sphere; sphereRadius: 0.1; mass: 1">
+        <!-- Boule 1 : Facile -->
+        <a-sphere id="ballEasy" class="grabbable"
+          color="#4CAF50"
+          radius="0.13"
+          position="-3 1 0"
+          dynamic-body="shape: sphere; sphereRadius: 0.13; mass: 0.8; friction: 0.95; angularDamping: 0.8; linearDamping: 0.6">
         </a-sphere>
+
+        <!-- Boule 2 : Normale -->
+        <a-sphere id="ballNormal" class="grabbable"
+          color="#2196F3"
+          radius="0.15"
+          position="2 1 2"
+          dynamic-body="shape: sphere; sphereRadius: 0.15; mass: 1.2; friction: 0.7; angularDamping: 0.5; linearDamping: 0.4">
+        </a-sphere>
+
+        <!-- Boule 3 : Difficile -->
+        <a-sphere id="ballHard" class="grabbable"
+          color="#E53935"
+          radius="0.17"
+          position="-2 1 2"
+          dynamic-body="shape: sphere; sphereRadius: 0.17; mass: 1.8; friction: 0.4; angularDamping: 0.2; linearDamping: 0.2">
+        </a-sphere>
+
+        <!-- Boule 4 : Très Difficile -->
+        <a-sphere id="ballPro" class="grabbable"
+          color="#111"
+          radius="0.18"
+          position="0 1 3"
+          dynamic-body="shape: sphere; sphereRadius: 0.18; mass: 2.2; friction: 0.25; angularDamping: 0.1; linearDamping: 0.1">
+        </a-sphere>
+
+      <!-- Menu -->
+      <a-entity id="menu" position="2 1.6 0" rotation="0 -45 0">
+          <a-box class="menu-button" id="level1" color="#4CAF50" depth="0.1" height="0.3" width="1.2" position="0 0.5 0">
+            <a-text value="Niveau 1" align="center" color="white" position="0 0 0.1"></a-text>
+          </a-box>
+
+          <a-box class="menu-button" id="level2" color="#2196F3" depth="0.1" height="0.3" width="1.2" position="0 0 0">
+            <a-text value="Niveau 2" align="center" color="white" position="0 0 0.1"></a-text>
+          </a-box>
+
+          <a-box class="menu-button" id="level3" color="#f44336" depth="0.1" height="0.3" width="1.2" position="0 -0.5 0">
+            <a-text value="Niveau 3" align="center" color="white" position="0 0 0.1"></a-text>
+          </a-box>
+        </a-entity>
+
+        <!-- Tableau de score -->
+        <a-entity id="scoreBoard" position="-2 1.6 0" rotation="0 45 0">
+        <a-plane width="1" height="0.4" color="#111" opacity="0.8"></a-plane>
+        <a-text id="scoreText" value="Score: 0" color="#FFF" position="-0.4 0.05 0.01" width="2"></a-text>
+        <a-text id="throwText" value="Throw: 1/2" color="#FFD700" position="-0.4 -0.15 0.01" width="2"></a-text>
       </a-entity>
     </a-scene>
 
     <script>
+      AFRAME.registerComponent('single-frame-bowling', {
+        init: function () {
+          // Boule par défaut
+          this.ball = document.querySelector('#ballNormal');
+          this.throwCount = 0;
+          this.strike = false;
+          this.throwActive = false;
+
+          // Toutes les quilles
+          this.pins = Array.from(document.querySelectorAll('[gltf-model="#pin_model"]'));
+
+          // Met à jour la boule active quand le joueur en saisit une
+          document.querySelectorAll('.grabbable').forEach(b => {
+            b.addEventListener('grab-start', () => {
+              document.querySelectorAll('.grabbable').forEach(o => o.id = '');
+              b.id = 'ball'; // devient la boule officielle
+              this.ball = b;
+            });
+          });
+
+          // Écoute les collisions entre la boule et les quilles
+          setTimeout(() => {
+            if (!this.ball.body) return;
+            this.ball.addEventListener('collide', e => {
+              const target = e.detail.body.el;
+              if (target && target.getAttribute('gltf-model') === '#pin_model') {
+                this.throwActive = true;
+              }
+            });
+          }, 500);
+
+          this.el.sceneEl.addEventListener('tick', () => {
+            if (this.throwActive) this.checkPins();
+          });
+        },
+
+        checkPins: function () {
+          let fallen = 0;
+          this.pins.forEach(pin => {
+            if (!pin.body) return;
+            const rot = pin.object3D.rotation;
+            const tilt = Math.abs(rot.x) + Math.abs(rot.z);
+
+            if (!pin.classList.contains('fallen') && tilt > 0.4) {
+              pin.classList.add('fallen');
+              fallen++;
+            }
+          });
+
+          // Si c’est un strike
+          if (fallen === this.pins.length && this.throwCount === 0) {
+            this.strike = true;
+            this.endFrame();
+          } else if (this.throwCount >= 1) {
+            this.endFrame();
+          }
+
+          this.throwCount++;
+          this.throwActive = false;
+        },
+
+        endFrame: function () {
+          console.log(this.strike ? 'STRIKE!' : 'Frame terminé');
+          setTimeout(() => this.resetFrame(), 2000);
+        },
+
+        resetFrame: function () {
+          // Remet la boule à zéro
+          if (this.ball && this.ball.body) {
+            this.ball.body.velocity.set(0, 0, 0);
+            this.ball.body.angularVelocity.set(0, 0, 0);
+            this.ball.body.position.copy(new CANNON.Vec3(0, 1.6, -0.5));
+            this.ball.object3D.rotation.set(0, 0, 0);
+          }
+
+          // Réinitialise les quilles
+          this.pins.forEach(pin => {
+            pin.classList.remove('fallen');
+            pin.body.velocity.set(0, 0, 0);
+            pin.body.angularVelocity.set(0, 0, 0);
+            const pos = pin.getAttribute('position');
+            pin.body.position.copy(new CANNON.Vec3(pos.x, pos.y, pos.z));
+            pin.object3D.rotation.set(0, 0, 0);
+          });
+
+          // Réinitialise les compteurs
+          this.throwCount = 0;
+          this.strike = false;
+        }
+      });
+
+
+      // Composant amélioré pour les lancers réalistes
       AFRAME.registerComponent('grabbygrip', {
         init: function (){
           this.system = this.el.sceneEl.systems.physics;
           this.GRABBED_STATE = 'grabbed';
-
           this.grabbing = false;
           this.hitEl = null;
           this.constraint = null; 
+          this.lastPos = new THREE.Vector3();
+          this.lastRot = new THREE.Vector3();
+          this.handVel = new THREE.Vector3();
+          this.handAngVel = new THREE.Vector3();
 
           this.onHit = this.onHit.bind(this);
           this.onGripOpen = this.onGripOpen.bind(this);
           this.onGripClose = this.onGripClose.bind(this);
+        },
+
+        tick: function () {
+          const pos = this.el.object3D.position;
+          this.handVel.subVectors(pos, this.lastPos);
+          this.lastPos.copy(pos);
+
+          const rot = this.el.object3D.rotation;
+          this.handAngVel.subVectors(rot, this.lastRot);
+          this.lastRot.copy(rot);
         },
 
         play: function() {
@@ -189,27 +375,39 @@
         onGripOpen: function() {
           const hitEl = this.hitEl;
           this.grabbing = false;
-          if (!hitEl) { return; }
+          if (!hitEl) return;
 
-          // On libère l’objet
           hitEl.removeState(this.GRABBED_STATE);
-          this.hitEl = null;
           this.system.removeConstraint(this.constraint);
           this.constraint = null;
+
+          // Lance la boule avec force et rotation réalistes
+          const intensity = 2.5;
+          hitEl.body.velocity.set(
+            this.handVel.x * 25 * intensity,
+            this.handVel.y * 25 * intensity,
+            this.handVel.z * 25 * intensity
+          );
+          hitEl.body.angularVelocity.set(
+            this.handAngVel.x * 10,
+            this.handAngVel.y * 10,
+            this.handAngVel.z * 10
+          );
+
+          this.el.emit('ball-thrown', { ball: hitEl });
+          this.hitEl = null;
         },
 
         onHit: function (e) {
           const hitEl = e.detail.body ? e.detail.body.el : e.detail.el;
-
-          // Conditions pour éviter bugs
-          if (!this.grabbing || hitEl === this.el || hitEl.is(this.GRABBED_STATE)) { return; }
+          if (!this.grabbing || hitEl === this.el || hitEl.is(this.GRABBED_STATE)) return;
 
           this.hitEl = hitEl;
           hitEl.addState(this.GRABBED_STATE);
-
-          // On attache l’objet avec une LockConstraint
           this.constraint = new CANNON.LockConstraint(this.el.body, hitEl.body);
           this.system.addConstraint(this.constraint);
+
+          hitEl.emit('grab-start');
         }
       });
     </script>

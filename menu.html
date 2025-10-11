@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <!-- Caméra + mains VR -->
+      <a-entity id="cameraRig" position="0 1.6 0">
+        <a-entity camera look-controls></a-entity>
+        <a-entity id="rightHand" laser-controls="hand: right" raycaster="objects: .menu-button;"></a-entity>
+      </a-entity>
+
+      <!-- Menu -->
+      <a-entity id="menu" position="0 1.6 -2">
+        <a-box class="menu-button" id="level1" color="#4CAF50" depth="0.1" height="0.3" width="1.2" position="0 0.5 0">
+          <a-text value="Niveau 1" align="center" color="white" position="0 0 0.1"></a-text>
+        </a-box>
+
+        <a-box class="menu-button" id="level2" color="#2196F3" depth="0.1" height="0.3" width="1.2" position="0 0 0">
+          <a-text value="Niveau 2" align="center" color="white" position="0 0 0.1"></a-text>
+        </a-box>
+
+        <a-box class="menu-button" id="level3" color="#f44336" depth="0.1" height="0.3" width="1.2" position="0 -0.5 0">
+          <a-text value="Niveau 3" align="center" color="white" position="0 0 0.1"></a-text>
+        </a-box>
+      </a-entity>
+
+      <!-- Lumière et sol -->
+      <a-light type="ambient" intensity="0.8"></a-light>
+      <a-plane rotation="-90 0 0" width="10" height="10" color="#ccc"></a-plane>
+    </a-scene>
+
+    <script>
+      const rightHand = document.querySelector('#rightHand');
+      const buttons = document.querySelectorAll('.menu-button');
+
+      // Effet visuel quand on survole un bouton
+      buttons.forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+          btn.setAttribute('color', '#FFD700'); // surbrillance
+        });
+        btn.addEventListener('mouseleave', () => {
+          // couleur d'origine selon l'id
+          if (btn.id === 'level1') btn.setAttribute('color', '#4CAF50');
+          else if (btn.id === 'level2') btn.setAttribute('color', '#2196F3');
+          else if (btn.id === 'level3') btn.setAttribute('color', '#f44336');
+        });
+      });
+
+      // Quand on appuie sur le trigger ou le bouton A
+      function handleSelect() {
+        const intersection = rightHand.components.raycaster.getIntersection(document.querySelector('.menu-button'));
+        const hits = rightHand.components.raycaster.intersections;
+
+        if (hits.length > 0) {
+          const target = hits[0].object.el;
+          console.log('Sélectionné :', target.id);
+
+          // Exemple d’action selon le bouton
+          if (target.id === 'level1') {
+            alert('Chargement du niveau 1');
+          } else if (target.id === 'level2') {
+            alert('Chargement du niveau 2');
+          } else if (target.id === 'level3') {
+            alert('Chargement du niveau 3');
+          }
+        }
+      }
+
+      rightHand.addEventListener('triggerdown', handleSelect);
+      rightHand.addEventListener('abuttondown', handleSelect);
+    </script>
+  </body>
+</html>

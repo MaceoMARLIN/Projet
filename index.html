@@ -19,7 +19,7 @@
       <!-- Ciel -->
       <a-sky color="#ECECEC"></a-sky>
 
-      <a-entity id="level3map" visible="false">
+      <a-entity id="level3map" visible="true">
         <!-- Sol -->
         <a-box 
           position="0 -0.025 -9"
@@ -75,7 +75,7 @@
         <a-entity gltf-model="#gutter_model" position="-0.875 -0.144 -6.170" scale="0.3 0.3 1.4" static-body></a-entity>
       </a-entity>
 
-      <a-entity id="level1map" visible="true">
+      <a-entity id="level1map" visible="false">
         <!-- Sol -->
         <a-box 
           position="0 -0.025 -6.9"
@@ -149,9 +149,8 @@
           color="red" 
           position="0 1.6 -0.5" 
           dynamic-body="shape: sphere; sphereRadius: 0.1; mass: 1">
-      </a-sphere>
+        </a-sphere>
       </a-entity>
-
     </a-scene>
 
     <script>
